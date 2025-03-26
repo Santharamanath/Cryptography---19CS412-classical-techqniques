@@ -495,7 +495,7 @@ d[j] = c[i];
 ```
 ## OUTPUT:
 
-![Screenshot 2025-03-19 091910](https://github.com/user-attachments/assets/d1a97461-99b5-4a19-9efa-f266f5468edb)
+![Screenshot 2025-03-26 084135](https://github.com/user-attachments/assets/6f5241d0-91ee-471d-92cf-48a2ffdfd775)
 
 
 ## RESULT:
