@@ -354,45 +354,75 @@ The Vigenere cipher is a method of encrypting alphabetic text by using a series 
 
 
 ## PROGRAM:
-PROGRAM:
-#include<stdio.h> #include<string.h>
-//FunctiontoperformVigenereencryption voidvigenereEncrypt(char*text,constchar*key){ inttextLen= strlen(text);
-intkeyLen=strlen(key); for(inti =0;i< textLen;i++){ charc =text[i]; if(c>='A'&&c<='Z'){
-//Encryptuppercaseletters
-text[i]=((c-'A'+key[i%keyLen]-'A')%26)+'A';
-}else if(c>='a'&&c<='z'){
-//Encryptlowercaseletters
-text[i]=((c-'a'+key[i%keyLen]-'A')%26)+'a';
-}
-}
-}
-//FunctiontoperformVigeneredecryption voidvigenereDecrypt(char*text,constchar*key){ inttextLen= strlen(text);
-intkeyLen=strlen(key);
+```
+ #include <ctype.h>
+ #include <string.h>
+ #include <stdlib.h>
+ void encipher();
+ void decipher();
+int main() {
+ int choice;
+ while (1) {
+ printf("\n1. Encrypt Text");
+ printf("\t2. Decrypt Text");
+ printf("\t3. Exit");
+ printf("\n\nEnter Your Choice: ");
+ scanf("%d", &choice);
+ if (choice == 3)
+ return 0; 
+ else if (choice == 1)
+ encipher();
+ else if (choice == 2)
+ decipher();
+ else
+ printf("Please Enter a Valid Option.\n");
+ }
+ }
+ void encipher() {
+ unsigned int i, j;
+ char input[50], key[10];
+ printf("\n\nEnter Plain Text: ");
+ scanf("%s", input);
+ printf("\nEnter Key Value: ");
+ scanf("%s", key);
+ printf("\nResultant Cipher Text: ");
+for (i = 0, j = 0; i < strlen(input); i++, j++) {
+ if (j >= strlen(key)) {
+ j = 0; 
+ }
+ printf("%c", 65 + (((toupper(input[i])- 65) + (toupper(key[j])- 65)) % 26));
+ }
+ printf("\n"); 
+ }
+ void decipher() {
+ unsigned int i, j;
+ char input[50], key[10];
+ int value;
+ printf("\n\nEnter Cipher Text: ");
+ scanf("%s", input);
+ printf("\nEnter the Key Value: ");
+ scanf("%s", key);
+ printf("\nDecrypted Plain Text: ");
+ for (i = 0, j = 0; i < strlen(input); i++, j++) {
+ if (j >= strlen(key)) {
+ j = 0; 
+ }
+ value = (toupper(input[i])- 65)- (toupper(key[j])- 65);
+ if (value < 0) {
+ value += 26; 
+ }
+printf("%c", 65 + (value % 26));
+ }
+ printf("\n"); 
+ }
+```
 
-for(inti =0;i< textLen;i++){ charc =text[i]; if(c>='A'&&c<='Z'){
-//Decryptuppercaseletters
- 
-text[i]=((c-'A'-(key[i% keyLen]-'A') +26) %26)+ 'A';
-}else if(c>='a'&&c<='z'){
-//Decryptlowercaseletters
-text[i]=((c-'a'-(key[i% keyLen]-'A') +26) %26)+ 'a';
-}
-}
-}
-intmain(){
-constchar *key="KEY";//Replacewithyourdesired key
-char message[]= "Thisisasecretmessage.";//Replace withyourmessage
-//Encrypt themessage vigenereEncrypt(message,key); printf("EncryptedMessage:%s\n",message);
-//Decrypt themessage backtotheoriginal vigenereDecrypt(message,key); printf("DecryptedMessage:%s\n",message); Return 0;
 
 ## OUTPUT:
-OUTPUT :
 
-Simulating Vigenere Cipher
+![Screenshot 2025-03-26 083657](https://github.com/user-attachments/assets/d6dd9ded-04a8-4255-b1e2-2313968e7fab)
 
 
-Input Message : SecurityLaboratory
-Encrypted Message : NMIYEMKCNIQVVROWXC Decrypted Message : SECURITYLABORATORY
 ## RESULT:
 The program is executed successfully
 
@@ -422,57 +452,51 @@ ALGORITHM DESCRIPTION:
 In the rail fence cipher, the plaintext is written downwards and diagonally on successive "rails" of an imaginary fence, then moving up when we reach the bottom rail. When we reach the top rail, the message is written downwards again until the whole plaintext is written out. The message is then read off in rows.
 
 ## PROGRAM:
-
-PROGRAM:
-#include<stdio.h> #include<string.h> #include<stdlib.h> main()
-{
-int i,j,len,rails,count,code[100][1000]; char str[1000];
-printf("Enter a Secret Message\n"); gets(str);
-len=strlen(str);
-printf("Enter number of rails\n"); scanf("%d",&rails); for(i=0;i<rails;i++)
-{
-for(j=0;j<len;j++)
-{
-code[i][j]=0;
-}
-}
-count=0; j=0;
-while(j<len)
-{
-if(count%2==0)
-{
-for(i=0;i<rails;i++)
-{
-//strcpy(code[i][j],str[j]);
-code[i][j]=(int)str[j]; j++;
-}
-
-}
-else
-{
- 
-for(i=rails-2;i>0;i--)
-{
-code[i][j]=(int)str[j]; j++;
-}
-}
-
-count++;
-}
-
-for(i=0;i<rails;i++)
-{
-for(j=0;j<len;j++)
-{
-if(code[i][j]!=0) printf("%c",code[i][j]);
-}
-}
-printf("\n");
-}
+```
+ #include <stdio.h>
+ #include <string.h>
+ int main() {
+ int i, j, k, l;
+ char a[20], c[20], d[20];
+ printf("\n\t\tRAIL FENCE TECHNIQUE\n");
+ printf("\nEnter the input string: ");
+ fgets(a, sizeof(a), stdin);
+a[strcspn(a, "\n")] = '\0';
+ l = strlen(a);
+ for (i = 0, j = 0; i < l; i++) {
+ if (i % 2 == 0) {
+ c[j++] = a[i];
+ }
+ }
+ for (i = 0; i < l; i++) {
+ if (i % 2 == 1) {
+ c[j++] = a[i];
+ }
+ }
+ c[j] = '\0'; 
+ printf("\nCipher text after applying rail fence: %s\n", c);
+ if (l % 2 == 0) {
+ k =l / 2;
+ } else {
+ k =(l / 2) + 1;
+ }
+ for (i = 0, j = 0; i < k; i++) {
+ d[j] = c[i];
+ j += 2;
+ }
+ for (i = k, j = 1; i < l; i++) {
+d[j] = c[i];
+ j += 2;
+ }
+ d[l] = '\0';
+ printf("\nText after decryption: %s\n", d);
+ return 0; 
+ }
+```
 ## OUTPUT:
-OUTPUT:
-Enter a Secret Message wearediscovered
-Enter number of rails 2
-waeicvrderdsoee
+
+![Screenshot 2025-03-19 091910](https://github.com/user-attachments/assets/d1a97461-99b5-4a19-9efa-f266f5468edb)
+
+
 ## RESULT:
 The program is executed successfully
